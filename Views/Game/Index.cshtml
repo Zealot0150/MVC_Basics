@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@using System.Linq;
+
+<h1>Gissningslek</h1>
+<p>
+    Välkommen till gissningsleken. Datorn slumpar fram ett nummer mellan 1 och 100  och du skall försöka gissa det.
+    Ange det nummer som du tror det hemliga nummret är i rutan nedan.
+
+</p>
+<form asp-controller="Game" asp-action="Index" method="post">
+    <input type="number" name="guessedNumber" id="myInput" />
+    <input type="submit" name="submit" />
+</form>
+<script>
+    const input = document.querySelector("#myInput");
+    input.focus();
+</script>
+
+
+@if (ViewBag.Message != null)
+{
+    if (ViewBag.Won == true)
+    {
+        <h1>Du vann, bra gjort. Det tog @ViewBag.Tries försök</h1>
+        <h1> Historik</h1>
+
+        List<string> list = new List<string>(ViewBag.Score.Split(','));
+        foreach (var s in list)
+        {
+            <p>@s</p>
+        }
+    }
+    else
+    {
+        <h2>@ViewBag.Message</h2>
+        <br/>
+        <p>Antal försök: @ViewBag.Tries</p>
+    }
+}
+
+
+
+
+
+

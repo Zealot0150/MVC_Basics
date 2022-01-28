@@ -1,0 +1,15 @@
+﻿
+.card-img-top {
+    /*max-height: 80px;
+    max-width: 80px;
+    min-height: 80px;
+    min-width: 80px;*/
+    border: solid;
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+#brand 
+{
+   
+}

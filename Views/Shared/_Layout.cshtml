@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/content/css/Sitex.css" rel="stylesheet" />
+    @*
+        Varför i hela friden fungerar inte detta needan?
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>*@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+    <div class="jumbotron text-center">
+        <h1>Zealot 0150</h1>
+        <p>Lita endast på män som dricker öl och kvinnor som fött barn.</p>
+    </div>
+
+   
+    
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+             @*   <img src="~/img/bioorange.jpg" class="img-center" height="50" width="50" />*@
+                <a id="brand" class="navbar-brand">Zealot 0150</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contacts", "Contacts", "Home")</li>
+                    <li>@Html.ActionLink("Projects", "Projects", "Home")</li>
+                    <li>@Html.ActionLink("Fever-test", "CheckPerson", "Doctor")</li>
+                    <li>@Html.ActionLink("Game", "Index", "Game")</li>
+                    <li>@Html.ActionLink("Crab-shop", "Crab", "Crab")</li>
+                </ul>
+               
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Shopping Cart</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="container" id="mainview">
+        @RenderBody()
+    </div>
+
+
+
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Zealot 0150 &copy; @DateTime.Now.Year</a>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

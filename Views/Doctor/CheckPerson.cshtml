@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "CheckPerson";
+}
+
+@using MVC_Basics.Models;
+@model Patient;
+
+
+<h1>Välkommen till febertestet</h1>
+<p>Lite hjälp på vägen. Hur vet man om det är en rektal eller oral termometer?</p>
+<p>Svar: På smaken</p>
+
+
+<form asp-controller="Doctor" asp-action="CheckPerson" method="post">
+    <label>Ange temperatur i boxen nedan</label><br />
+    <input type="number" name="temp" />
+    <input type="submit" value="Submit">
+    <p>Välj enhet</p>
+
+    <div id="Farenheit">
+        <b>
+            @Html.RadioButtonFor(m => Patient.Scale, "Celcius", new { @class = "Doctor", @name = "scale" }) Celcius
+        </b>
+    </div>
+    <div id="Celcius">
+        <b>
+            @Html.RadioButtonFor(m => Patient.Scale, "Farenheit", new { @class = "Doctor", @name = "scale" }) Farenheit
+        </b>
+    </div>
+</form>
+
+
+@if (ViewBag.Message != null)
+{
+    <h2> @ViewBag.Message</h2>
+}
+@if (ViewBag.Message == null)
+{
+    <br />
+    <br />
+    <br />
+
+}

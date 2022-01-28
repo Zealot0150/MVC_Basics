@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Crab";
+}
+
+@using MVC_Basics.ViewModels;
+@model CrabListViewmodel;
+<link href="~/content/css/crab.css" rel="stylesheet" />
+
+<h1>Crabshopen</h1>
+<div>
+    @*@ViewBag.Message;*@
+
+    @for (int i = 0; i < Model.Crabs.Count(); i++)
+    {
+
+        var crab = Model.Crabs.ElementAt(i);
+        <div></div>
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2>@crab.Name</h2>
+                </div>
+                <div class="card-body text-center">
+                    <img class="card-img-top" src="@crab.ImageUrl" alt="">
+                    @*<p>@crab.Description</p>*@
+                </div>
+                <div class="card-footer">
+                    <h3 class="pull-right">@crab.Price.ToString("c")</h3>
+                    <a href="#" class="btn-sm btn-info">Detaljer</a>
+                    <a href="#" class="btn-sm btn-success">köp</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
