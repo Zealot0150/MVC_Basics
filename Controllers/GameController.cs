@@ -13,7 +13,8 @@ namespace MVC_Basics.Controllers
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("number")))
             {
-                    HttpContext.Session.SetString("number", random.Next(100) + "");
+                HttpContext.Session.SetString("number", random.Next(100) + "");
+                HttpContext.Session.SetString("nrOfGuess", "0");
             }
             return View();
         }
@@ -21,31 +22,27 @@ namespace MVC_Basics.Controllers
         [HttpPost]
         public IActionResult Index(int guessedNumber)
         {
-            try
+            string strToGuess = HttpContext.Session.GetString("number");
+            string nrOfGuess = HttpContext.Session.GetString("nrOfGuess");
+            if ((string.IsNullOrEmpty(strToGuess))||(string.IsNullOrEmpty(nrOfGuess)))
             {
-                // did not found any material about checking if user timed out, so tries with if its null
-                if (HttpContext.Session == null)
-                {
-                    ViewBag.Message = "Logged out, reload page";
-                    return View();
-                }
-            }
-            catch (Exception)
-            {
-                ViewBag.Message = "Logged out";
+                ViewBag.Message = "Game timed out, reload page";
                 return View();
             }
-            
 
-            int nrToGuess = Int32.Parse(HttpContext.Session.GetString("number"));
+            int nrToGuess = Int32.Parse(strToGuess);
+            int nrTries = Int32.Parse(nrOfGuess);
+
             this.ViewBag.Message = game.Guess(guessedNumber, nrToGuess, out bool won);
-            ViewBag.Tries = game.NrTries;
+            ViewBag.Tries = ++nrTries;
+            HttpContext.Session.SetString("nrOfGuess",nrTries +"");
+
             this.ViewBag.Won = won;
 
             // check for victory and if so clean the model, the view will show the old.
             if (won)
             {
-                string score = "Score " + DateTime.Now.ToString() + " " + game.NrTries;
+                string score = "Score " + DateTime.Now.ToString() + " " + nrTries;
                 if (Request.Cookies["Zealotgame"] != null)
                 {
                    score = Request.Cookies["Zealotgame"] + "," + score;
@@ -56,7 +53,7 @@ namespace MVC_Basics.Controllers
                 option.Expires = DateTime.Now.AddMinutes(20);
                 Response.Cookies.Append("Zealotgame", score, option);
                 ViewBag.Score = score;
-                
+                HttpContext.Session.SetString("nrOfGuess", "0");
                 HttpContext.Session.SetString("number", random.Next(100) + "");
             }
             return View();
