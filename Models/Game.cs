@@ -2,8 +2,8 @@
 {
     public class Game
     {
-        public static int nrGuess = 0;
-        public static string Guess(int guessedNumber, int numberToGuess, out bool won)
+        public  int nrGuess = 0;
+        public string Guess(int guessedNumber, int numberToGuess, out bool won)
         {
             nrGuess++;
             won = false;
@@ -17,8 +17,8 @@
             else
                 return "Du gissade för lågt";
         }
-        public static string NrTries { get { return "" + nrGuess; } }
-        public static void Reset()
+        public string NrTries { get { return "" + nrGuess; } }
+        public void Reset()
         {
             nrGuess = 0;
         }
