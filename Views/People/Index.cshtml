@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+@model PeopleViewModel
+@using MVC_Basics.ViewModels;
+
+
+<h1> Personer</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Namn 
+            </th>
+            <th>
+                Telefon
+            </th>
+            <th>
+                Stad
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.PeopleList) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tele)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", "People", new { Id = item.Id });
+            </td>
+        </tr>
+}
+ @foreach (var item in Model.PeopleList)
+ {
+    <partial name="Details" model="item" />
+ }
+   
+
+
+    </tbody>
+</table>
+
+
+<form asp-controller="Search" asp-action="Search"  method="post">
+    <input type="text" name="searchString">
+    <input type="submit" value="Search" />
+
+</form>
+
+<form asp-controller="People" asp-action="Create"  method="get">
+    <label asp-for="Id" class="control-label">Skapa ny</label>
+    <button asp-controller="People" asp-action="Create">Skapa ny</button>
+
+</form>
+
+
+@Html.ActionLink("Skapa", "Create", "People")

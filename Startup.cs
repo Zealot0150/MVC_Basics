@@ -1,23 +1,49 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MVC_Basics.Models;
+using MVC_Basics.Models.Services;
+using MVC_Basics.Models.Repos;
+
+
+
+
+
 
 namespace MVC_Basics
 {
     public class Startup
     {
+
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ICrabRepository, MochCrabRepository>();
-            services.AddScoped<ICategoryRepository, MochCategoryRepository>();
+            services.AddScoped<ICrabRepository, CrabRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepositary>();
+            services.AddScoped<IServicePeople, PeopleRepos>();
+
+
+
 
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
             services.AddSession();
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            
+
 
             //services.AddMvc();
             // services.addScoped<IxxxRepository, MockDatabaseRepository>
@@ -37,10 +63,10 @@ namespace MVC_Basics
 
             app.UseSession();
             // app.UseStatusCodePages();
-            // app.UseHttpsRedirection(); från http till https
+            app.UseHttpsRedirection(); 
             app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
 

@@ -29,6 +29,8 @@ namespace MVC_Basics.Models
 
         };
 
+        IEnumerable<Crab> ICrabRepository.CrabsOfTheWeek => throw new System.NotImplementedException();
+
         public Crab GetCrabById(int id)
         {
             return AllCrabs.FirstOrDefault(c => c.CrabID == id);
