@@ -16,12 +16,14 @@ namespace MVC_Basics.ViewModels
 
         public int Id { get; set; }
 
-
+        [Required(ErrorMessage = "Namn är Oblicterat")]
         [StringLength(100, MinimumLength = 1)]
         public string Name { get; set; }
-        [Required]
-        [StringLength(14, MinimumLength = 6)]
+
+        [Required(ErrorMessage = "Telefon is obligerat")]
+        [StringLength(20, MinimumLength = 6)]
         public string Tele { get; set; }
+
         public string City { get; set; }
     }
 }

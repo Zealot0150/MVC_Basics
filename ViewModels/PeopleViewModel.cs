@@ -7,8 +7,6 @@ namespace MVC_Basics.ViewModels
     {
         public IEnumerable<People> PeopleList { get; set; }
         public string SearchCriteria { get; set; }
-        
-        public int UserToDelete { get; set; } 
-
+        public int SelectedUser { get; set; } 
     }
 }

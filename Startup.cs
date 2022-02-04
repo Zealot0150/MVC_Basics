@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,8 +34,7 @@ namespace MVC_Basics
             services.AddScoped<ICategoryRepository, CategoryRepositary>();
             services.AddScoped<IServicePeople, PeopleRepos>();
 
-
-
+            services.AddMvc().AddRazorRuntimeCompilation();
 
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();

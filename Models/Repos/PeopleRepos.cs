@@ -27,7 +27,20 @@ namespace MVC_Basics.Models.Repos
 
         bool IServicePeople.AddUser(CreatePersonViewModel peopleVM)
         {
-            throw new NotImplementedException();
+            try
+            {
+                People people = new People();
+                people.City = peopleVM.City;
+                people.Name = peopleVM.Name;
+                people.Tele = peopleVM.Tele;
+                appDbContext.People.Add(people);
+                appDbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;                        
         }
 
         bool IServicePeople.DeleteUser(int id)
@@ -47,9 +60,27 @@ namespace MVC_Basics.Models.Repos
             return true;
         }
 
+        People IServicePeople.GetUSer(int id)
+        {
+            try
+            {
+                List<People> list = appDbContext.People.ToList();
+                People p = list.First(p => p.Id == id);
+                return p;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         IEnumerable<People> IServicePeople.SearchPeople(string searchText)
         {
             List<People> list = appDbContext.People.ToList();
+
+            if (string.IsNullOrEmpty(searchText))
+                return list;
+
             list = list.Where(s => s.City.Contains(searchText)
                             || s.Id.ToString().Contains(searchText)
                             || s.Tele.Contains(searchText)

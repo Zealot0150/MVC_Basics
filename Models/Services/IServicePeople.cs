@@ -10,11 +10,9 @@ namespace MVC_Basics.Models.Services
 
         public IEnumerable<People> SearchPeople(string searchText);
 
-
-
         public bool DeleteUser(int id);
 
         public bool AddUser(CreatePersonViewModel peopleVM);
-
+        public People GetUSer(int id);
     }
 }

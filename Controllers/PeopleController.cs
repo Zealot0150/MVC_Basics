@@ -39,7 +39,7 @@ namespace MVC_Basics.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View(new CreatePersonViewModel());
+            return View();
         }
 
         // POST: Create
@@ -63,13 +63,11 @@ namespace MVC_Basics.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
-        public IActionResult Search(string Id)
+       [HttpPost]
+        public IActionResult Search(PeopleViewModel peopleVM)
         {
-            PeopleViewModel peopleVM = new PeopleViewModel();
-            peopleVM.PeopleList = peopleService.SearchPeople(Id);
-            return Index(peopleVM);
-            //return RedirectToAction(nameof(Index), new { peopleVM});
+            peopleVM.PeopleList = peopleService.SearchPeople(peopleVM.SearchCriteria);
+            return View(nameof(Index),peopleVM);
         }
 
     }

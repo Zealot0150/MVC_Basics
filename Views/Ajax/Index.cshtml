@@ -1,0 +1,69 @@
+﻿@model PeopleViewModel;
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <script>
+
+        function DeletexPeople3()
+        {
+            var x = document.getElementById("myText");
+            var txt = x.value;
+            var url = "Ajax/Deletex/" + x.value;
+            // detta kommer stå kvar även ifall användaren tas bort
+            document.getElementsByName("target")[0].innerHTML = "Misslyckades med ta bort användare";
+            
+
+            $.ajax(url, function (Deletex, status) {
+                // kommer i dagsläget inte köras även ifall användaren tas bort, kanske körs den på er dator.
+                // Om man tar bort komponenter kan man ibland få koden att bita
+                // Kan inte se något fel eller skillnad emot details, vilket gör att jag gjort är rätt antar att det är cach
+                document.getElementsByName("target")[0].innerHTML = "Användaren togs bort";
+            });
+        }
+
+        function GetPeople()
+        {
+            $.get("Ajax/List", function (List, status) {
+
+                document.getElementsByName("target")[0].innerHTML = List;
+            });
+        }
+
+        // Ja den ser sjuk ut, men då det verkar som att ajax cashar, så får den se ut så här ett tag då jag inte vågar ändra
+        function ShowDetails2() {
+            var x = document.getElementById("myText");
+            var txt = x.value;
+            var url = "Ajax/Details/" + x.value;
+            $.post(url, function (Details, status) {
+                document.getElementsByName("target")[0].innerHTML = Details;
+            });
+        }
+    </script>
+</head>
+<body>
+    <form method="post">
+        <div class="form-group">
+            <label class="text">Tryck för att hämta personer</label>
+            <input id="Button1" onclick="GetPeople()" type="button" value="Visa" />
+        </div>
+    </form>
+    <br />
+    <br />
+    <br />
+
+    Name:<input type="text" id="myText" value="">
+    <button type="button" onclick="ShowDetails2()">Detaljer</button>
+    <button type="button" onclick="DeletexPeople3()">Ta bort</button>
+    <p id="demo"></p>
+
+
+    <br />
+    <br />
+
+    <div name="target" id="target">
+
+
+    </div>
+</body> 
