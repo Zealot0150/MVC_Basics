@@ -27,12 +27,7 @@ namespace MVC_Basics.Controllers
             else
                 return View(model);
         }
-        //[HttpPost]
-        //public IActionResult Index(PeopleViewModel model)
-        //{
-        //    return View(model);
-        //}
-
+        
 
 
         // GET: Create

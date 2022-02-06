@@ -1,0 +1,37 @@
+﻿@model MVC_Basics.ViewModels.CreatePersonViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>CreatePersonViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="addform">
+              
+            <div class="form-group">
+                <label for="Name"  class="control-label">Namn</label>
+                <input name="Name" label="Name" id="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label  for="Tele"class="control-label">Telefon</label>
+                <input name="Tele" id="Tele"class="form-control" />
+            </div>
+            <div class="form-group">
+                <label  for="City"class="control-label">Stad</label>
+                <input  name="City"id="City" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" onclick="AddUserCalllback2()" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

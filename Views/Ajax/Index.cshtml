@@ -5,23 +5,162 @@
 }
 <head>
     <script>
+         // const { ajax } = require("jquery");
 
-        function DeletexPeople3()
-        {
-            var x = document.getElementById("myText");
-            var txt = x.value;
-            var url = "Ajax/Deletex/" + x.value;
-            // detta kommer stå kvar även ifall användaren tas bort
-            document.getElementsByName("target")[0].innerHTML = "Misslyckades med ta bort användare";
-            
+        //const { Alert } = require("bootstrap");
 
-            $.ajax(url, function (Deletex, status) {
-                // kommer i dagsläget inte köras även ifall användaren tas bort, kanske körs den på er dator.
-                // Om man tar bort komponenter kan man ibland få koden att bita
-                // Kan inte se något fel eller skillnad emot details, vilket gör att jag gjort är rätt antar att det är cach
-                document.getElementsByName("target")[0].innerHTML = "Användaren togs bort";
-            });
+
+        function getValueById(id) {
+            return document.getElementById(id).value;
         }
+        function getValueByName(id) {
+            return document.getElementByName(id).value;
+        }
+
+        function setValueId(id, value) {
+            document.getElementById(id).value = value;
+        }
+
+        function setValueName(name, value) {
+            document.getElementById(name).value = value;
+        }
+
+
+
+        function getFromInput() {
+
+        }
+
+
+        function displayMessage(msg) {
+            document.getElementById("message").innerHTML = msg;
+        }
+
+        function displayError(error) {
+            document.getElementById("error").innerHTML = JSON.stringify(error);
+        }
+
+        function handleAjaxError(error) {
+            displayError(error);
+
+            switch (error.status) {
+                case 404:
+                    Alert(error.responseText);
+                    break;
+                case 500:
+                    Alert(error.responseText);
+                    break;
+                default:
+                    Alert(error.responseText);
+                    break;
+            }
+        }
+
+        // Bara exempel som är bra att ha i framtiden   ///////////////////////////////////////////////////
+
+        //function Success(obj) { alert(obj) }
+
+        // AJAX settings object bara exempel
+    
+        //ajax_SO =  // exempel på objekt att sända
+        //{
+        //    url: "Ajax/AddUser",
+        //    type: "POST",
+        //    contentType: "application/json",
+        //    success: function (obj) { Success(obj)},
+        //    error: function (obj) { HandleAjaxError(obj) },
+        //    complete: function (obj) { }   // som i try catch denna körs alltid
+        //};
+        // bara testar anropet...
+        //  $.ajax(ajax_SO);
+        // Promises....
+        //$.ajax(ajax_SO).done(function (data) { Success(data); }).fail(function (data) { HandleAjaxError(data) });
+
+        // Ex på Get inget i uppgiften...
+        //function GetByURl(_url)
+        //{
+        //    $.ajax(_url).done(function (data) { })
+        //}
+
+        //function get() {
+        //    $.ajax(URL)
+        //        .done(function (data) {
+        //            displayMessage("Products Retrieved");
+        //            console.log(data);
+        //        })
+        //        .fail(function (error) {
+        //            handleAjaxError(error);
+        //        })
+        //        .always(function () {
+        //            // Anything you want to happen here on either fail or done
+        //            console.log("In the always() method");
+        //        });
+        //}
+
+        // Updatering = put
+        //function updateProduct()
+        //{
+        //    let product = getFromInput()
+        //    $.ajax({
+        //        url: URL + "/" + product.productId,
+        //        type: "PUT",
+        //        contentType: "application/json",
+        //        data: JSON.stringify(product)
+
+        //    })
+        //}
+
+        //Globala Events ajax
+        //$(document).ajaxSend(function () {
+        //    console.log("Ajax call is being sent");
+        //});
+
+        //$(document).ajaxSend(function (event, xhr, settings) {
+        //    console.log(settings);
+        //});
+        // 
+        // $("#header").load(url); laddar elementet id=header med filen på url
+
+        //f Deferred promises alla måste gå igenom
+        //let def = $.Deferred();
+        //def.then(function () {
+        //    return $.get(URL).done()
+        //})
+        //.then( osv..)
+
+        //let def = $.Deferred();
+        //setTimeout(def.resolve, 1000);
+        //return def.promise();
+        // gör så att then kan köras så och kan användas
+        //function SetTimeDefTimout()
+        //{
+        //    f().then(()=>{})
+        //}
+
+        // går även att använda vid notifering
+
+        //$(document).ready(
+        //function () {
+        //    let msg = $(this).data("onfocus");
+        //    msg.....
+        //});
+
+
+        //////////////////////////////////////////////////
+        
+
+        function Delete() {
+            var URL = "Ajax/Delete/" + getValueById("myText");
+
+            $.ajax//({ URL,type="DELETE"} Får hela sidan att hänga sig.
+                (URL)
+                .done(function (data) {
+                    document.getElementsByName("target")[0].innerHTML = data;
+                }).fail(function (data) {
+                    displayError(data);
+                });
+        }
+        
 
         function GetPeople()
         {
@@ -31,31 +170,62 @@
             });
         }
 
-        // Ja den ser sjuk ut, men då det verkar som att ajax cashar, så får den se ut så här ett tag då jag inte vågar ändra
-        function ShowDetails2() {
-            var x = document.getElementById("myText");
-            var txt = x.value;
-            var url = "Ajax/Details/" + x.value;
-            $.post(url, function (Details, status) {
-                document.getElementsByName("target")[0].innerHTML = Details;
+        function ShowDetails()
+        {
+
+            var URL = "Ajax/Details/" + document.getElementById("myText").value;
+            $.post(URL)
+                .done(function (data) {
+                    document.getElementsByName("target")[0].innerHTML = data;})
+                .fail(function (data) {
+                    displayError(data);
             });
         }
+
+        function AddUser() {
+            $.get("Ajax/Add", function (Add, status) {
+                document.getElementsByName("target")[0].innerHTML = Add;
+            });
+        }
+
+        function AddUserCalllback2()
+        {
+            var URL = "Ajax/AddNew2";
+            let peopledata = $("#addform").serializeArray();
+
+            $.ajax(
+                {
+                    url: URL,
+                    contentType: "application/json",
+                    data: JSON.stringify(peopledata),
+                    type: "POST"
+                })
+                .done(function (data) {
+                    // fungerar inte just nu, värderna verkar finnas tills anropet.
+                    document.getElementsByName("target")[0].innerHTML = data;
+                }).fail(function (data) {
+                    displayError(data);
+                    document.getElementsByName("target")[0].innerHTML = "Kunde inte lägga till användare";
+                });
+        }
+
     </script>
 </head>
 <body>
     <form method="post">
         <div class="form-group">
-            <label class="text">Tryck för att hämta personer</label>
+            <label class="text">Tryck för att hämta personer(Kan ta upp till 5 sek. DB connection?)</label>
             <input id="Button1" onclick="GetPeople()" type="button" value="Visa" />
         </div>
     </form>
     <br />
     <br />
     <br />
-
-    Name:<input type="text" id="myText" value="">
-    <button type="button" onclick="ShowDetails2()">Detaljer</button>
-    <button type="button" onclick="DeletexPeople3()">Ta bort</button>
+    Välj användare och action:
+    <input type="text" id="myText" value="" label="xy" />
+    <button type="button" onclick="ShowDetails()">Detaljer</button>
+    <button type="button" onclick="Delete()">Ta bort</button>
+    <button type="button" onclick="AddUser()">Lägg till</button>
     <p id="demo"></p>
 
 
