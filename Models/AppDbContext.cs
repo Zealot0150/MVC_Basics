@@ -7,6 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MVC_Basics.Models
 {
+
+    // Bara för mitt dåliga minne
+//    get-help Add-Migration
+//and
+
+//get-help Update-Database
+
+
     public class AppDbContext : DbContext
     {
         public DbSet<Crab> Crabs { get; set; }
@@ -17,6 +25,15 @@ namespace MVC_Basics.Models
         public AppDbContext(DbContextOptions <AppDbContext> options) : base(options)
         {
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    // körs vid start behövs när man inte har startup config
+        //    // denna är olika för varje lev så vid nuget pack mysql=> UseMySql
+        //    optionsBuilder.UseSqlServer(Configurationsstring);
+        //    base.OnConfiguring(optionsBuilder);
+        //}
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
